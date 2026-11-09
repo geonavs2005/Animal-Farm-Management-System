@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Animal Farm Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="icon-badge">
+            🛡️
+        </div>
+
+        <h1>Admin Portal Login</h1>
+
+        <p class="welcome">
+            Secure access to the farm administrative control console.
+        </p>
+
+        <!-- Notification Banner -->
+        <div class="alert-banner" id="alertBanner"></div>
+
+        <form onsubmit="return validateAdminLogin(event)">
+
+            <div class="form-group">
+                <label for="adminUsername">Admin Username</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input
+                        type="text"
+                        id="adminUsername"
+                        placeholder="Enter admin username"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="adminPassword">Admin Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        placeholder="Enter admin password"
+                        required
+                    >
+                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility('adminPassword', this)" title="Show/Hide Password">
+                        👁️
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn admin">
+                <span>🔐 Sign In as Admin</span>
+            </button>
+
+        </form>
+
+        <div class="quick-fill" style="margin-top: 18px;">
+            <span>💡 Default Admin: <strong>admin</strong> / <strong>admin123</strong></span>
+            <button type="button" class="quick-fill-btn" onclick="document.getElementById('adminUsername').value='admin'; document.getElementById('adminPassword').value='admin123';">Auto-fill</button>
+        </div>
+
+        <div class="card-footer">
+            <p>
+                Need regular user access? 
+                <a href="login.html">🌾 User Login</a>
+            </p>
+            <p style="margin-top: 6px;">
+                <a href="user-dashboard.html" style="color: #0d47a1; font-weight: 600;">📊 Open Admin Dashboard Directly →</a>
+            </p>
+            <a href="index.html" class="back-link">
+                ← Back to Homepage
+            </a>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

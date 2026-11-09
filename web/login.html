@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Portal Login | Animal Farm Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Icon Badge -->
+        <div class="icon-badge" id="portalBadge">
+            🚜
+        </div>
+
+        <h1 id="loginTitle">Farm Portal Login</h1>
+
+        <p class="welcome" id="loginSubtitle">
+            Welcome back! Access your animal farm management dashboard.
+        </p>
+
+        <!-- Role Selector Switcher -->
+        <div class="role-tabs">
+            <button type="button" class="role-tab active" id="tabUser" onclick="switchLoginRole('USER')">
+                <span>🌾</span> User Login
+            </button>
+            <button type="button" class="role-tab" id="tabAdmin" onclick="switchLoginRole('ADMIN')">
+                <span>🛡️</span> Admin Login
+            </button>
+        </div>
+
+        <!-- Notification Banner -->
+        <div class="alert-banner" id="alertBanner"></div>
+
+        <!-- Login Form -->
+        <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+
+            <input type="hidden" id="selectedRole" value="USER">
+
+            <div class="form-group">
+                <label for="loginUsername">Username</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input
+                        type="text"
+                        id="loginUsername"
+                        name="username"
+                        placeholder="Enter username"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        name="password"
+                        placeholder="Enter password"
+                        autocomplete="current-password"
+                        required
+                    >
+                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility('loginPassword', this)" title="Show/Hide Password">
+                        👁️
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="rememberMe">
+                    <span>Remember me</span>
+                </label>
+                <a href="javascript:void(0)" onclick="showAlert('Please contact the farm administrator (admin / admin123) for password recovery.', 'info')">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">
+                <span>🔓 Sign In</span>
+            </button>
+
+        </form>
+
+        <!-- Demo Credentials Quick-Fill Hint -->
+        <div class="quick-fill" id="quickFillCard">
+            <span id="demoHintText">💡 Demo Admin: <strong>admin</strong> / <strong>admin123</strong></span>
+            <button type="button" class="quick-fill-btn" onclick="fillDemoCredentials()">Auto-fill</button>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="card-footer">
+            <p>
+                Don't have an account yet? 
+                <a href="register.html">🌱 Create Account</a>
+            </p>
+            <p style="margin-top: 6px;">
+                <a href="user-dashboard.html" style="color: var(--primary-dark); font-weight: 600;">📊 Enter Dashboard Directly →</a>
+            </p>
+            <a href="index.html" class="back-link">
+                ← Back to Homepage
+            </a>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

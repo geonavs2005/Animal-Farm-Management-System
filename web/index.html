@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Portal | Animal Farm Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="portal-wrapper">
+
+        <!-- Master Top Navigation Bar -->
+        <header class="portal-nav-bar">
+            <div class="portal-brand">
+                <div class="portal-brand-icon">🌾</div>
+                <div class="portal-brand-text">
+                    <h2>Animal Farm Management System</h2>
+                    <p>Unified Farm Portal & Control Hub</p>
+                </div>
+            </div>
+
+            <nav class="portal-nav-links">
+                <button type="button" class="portal-nav-btn active" id="btnNavHub" onclick="showPortalView('hub')">
+                    🏠 Home
+                </button>
+                <button type="button" class="portal-nav-btn" id="btnNavDash" onclick="showPortalView('dashboard')">
+                    📊 Farm Dashboard
+                </button>
+                <button type="button" class="portal-nav-btn" id="btnNavLogin" onclick="showPortalView('login')">
+                    🔐 User Login
+                </button>
+                <button type="button" class="portal-nav-btn admin-link" id="btnNavAdmin" onclick="showPortalView('admin')">
+                    🛡️ Admin Portal
+                </button>
+                <button type="button" class="portal-nav-btn" id="btnNavRegister" onclick="showPortalView('register')">
+                    🌱 Registration
+                </button>
+            </nav>
+        </header>
+
+        <!-- VIEW 1: MASTER OVERVIEW HUB (DEFAULT) -->
+        <main id="portalHubView">
+            
+            <section class="portal-hero">
+                <h1>Welcome to Your Complete Farm Management Hub</h1>
+                <p>Everything you need in one place. Access live livestock management, track feed inventory, view health logs, or sign in through the farmer and admin portals below.</p>
+            </section>
+
+            <div class="portal-cards-grid">
+
+                <!-- Card 1: Dashboard -->
+                <div class="portal-hub-card">
+                    <div>
+                        <div class="hub-card-icon" style="background: #e8f5e9;">📊</div>
+                        <h3 class="hub-card-title">Live Farm Dashboard</h3>
+                        <p class="hub-card-desc">
+                            Real-time management console for livestock, daily feeding supplies, veterinarian logs, and registered staff.
+                        </p>
+                        <ul class="hub-card-features">
+                            <li><span>✓</span> 🐄 Add, search & filter animals</li>
+                            <li><span>✓</span> 🌾 Feed inventory & restock tracking</li>
+                            <li><span>✓</span> 🩺 Health & vaccination logs</li>
+                            <li><span>✓</span> 👥 Staff & user management</li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn" onclick="showPortalView('dashboard')">
+                        <span>📊 Open Live Dashboard</span>
+                    </button>
+                </div>
+
+                <!-- Card 2: User Login -->
+                <div class="portal-hub-card">
+                    <div>
+                        <div class="hub-card-icon" style="background: #f0fdf4;">🔐</div>
+                        <h3 class="hub-card-title">User / Farmer Login</h3>
+                        <p class="hub-card-desc">
+                            Access portal for registered farm staff and workers to view animal status and farm updates.
+                        </p>
+                        <ul class="hub-card-features">
+                            <li><span>✓</span> 🌾 Farmer credentials authentication</li>
+                            <li><span>✓</span> 🚜 View assigned animal records</li>
+                            <li><span>✓</span> 💡 Demo User: <strong>farmer1</strong></li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn btn-outline" onclick="showPortalView('login')">
+                        <span>🔓 Sign In as User</span>
+                    </button>
+                </div>
+
+                <!-- Card 3: Admin Portal -->
+                <div class="portal-hub-card" style="border-color: #bfdbfe;">
+                    <div>
+                        <div class="hub-card-icon" style="background: #eff6ff;">🛡️</div>
+                        <h3 class="hub-card-title" style="color: #0d47a1;">Admin Portal</h3>
+                        <p class="hub-card-desc">
+                            Secure administrative control center with master permissions to manage animals, inventory, and users.
+                        </p>
+                        <ul class="hub-card-features">
+                            <li><span>✓</span> 🔐 Master administration access</li>
+                            <li><span>✓</span> 🗑️ Add, modify & delete permissions</li>
+                            <li><span>✓</span> 💡 Default: <strong>admin / admin123</strong></li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn admin" onclick="showPortalView('admin')">
+                        <span>🛡️ Sign In as Admin</span>
+                    </button>
+                </div>
+
+                <!-- Card 4: Registration -->
+                <div class="portal-hub-card">
+                    <div>
+                        <div class="hub-card-icon" style="background: #fefce8;">🌱</div>
+                        <h3 class="hub-card-title">Account Registration</h3>
+                        <p class="hub-card-desc">
+                            Register new farm accounts with interactive password validation and farm specialization setup.
+                        </p>
+                        <ul class="hub-card-features">
+                            <li><span>✓</span> 👤 Quick account creation</li>
+                            <li><span>✓</span> 🔒 Real-time password strength meter</li>
+                            <li><span>✓</span> 📝 Farm type customization</li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn btn-outline" onclick="showPortalView('register')">
+                        <span>🌱 Register New Account</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- VIEW 2: EMBEDDED INTEGRATED VIEW (DASHBOARD, LOGIN, ADMIN, REGISTRATION) -->
+        <section id="portalFrameView" class="portal-frame-container">
+            <div class="portal-frame-header">
+                <div class="portal-frame-title">
+                    <span id="frameIcon">📊</span>
+                    <span id="frameTitleText">Farm Management Dashboard</span>
+                </div>
+                <div class="portal-frame-actions">
+                    <button type="button" class="btn-frame-action" onclick="showPortalView('hub')">
+                        ← Back to Master Hub
+                    </button>
+                    <a href="user-dashboard.html" target="_blank" id="frameExternalLink" class="btn-frame-action">
+                        ↗ Open Full Page
+                    </a>
+                </div>
+            </div>
+
+            <iframe id="portalIframe" class="portal-iframe" src="about:blank"></iframe>
+        </section>
+
+    </div>
+
+    <script>
+        const VIEWS = {
+            hub: {
+                title: "Portal Home",
+                icon: "🏠",
+                url: null
+            },
+            dashboard: {
+                title: "Farm Management Dashboard",
+                icon: "📊",
+                url: "user-dashboard.html"
+            },
+            login: {
+                title: "User / Farmer Login",
+                icon: "🔐",
+                url: "login.html"
+            },
+            admin: {
+                title: "Admin Portal Login",
+                icon: "🛡️",
+                url: "admin-login.html"
+            },
+            register: {
+                title: "New Account Registration",
+                icon: "🌱",
+                url: "register.html"
+            }
+        };
+
+        function showPortalView(viewKey) {
+            // Update active state on nav buttons
+            const navMap = {
+                hub: "btnNavHub",
+                dashboard: "btnNavDash",
+                login: "btnNavLogin",
+                admin: "btnNavAdmin",
+                register: "btnNavRegister"
+            };
+
+            Object.values(navMap).forEach(btnId => {
+                const el = document.getElementById(btnId);
+                if (el) el.classList.remove("active");
+            });
+
+            const activeBtn = document.getElementById(navMap[viewKey]);
+            if (activeBtn) activeBtn.classList.add("active");
+
+            const hubView = document.getElementById("portalHubView");
+            const frameView = document.getElementById("portalFrameView");
+            const iframe = document.getElementById("portalIframe");
+            const frameIcon = document.getElementById("frameIcon");
+            const frameTitle = document.getElementById("frameTitleText");
+            const extLink = document.getElementById("frameExternalLink");
+
+            if (viewKey === "hub") {
+                hubView.style.display = "block";
+                frameView.style.display = "none";
+                window.location.hash = "";
+            } else {
+                hubView.style.display = "none";
+                frameView.style.display = "block";
+
+                const config = VIEWS[viewKey];
+                if (config) {
+                    if (frameIcon) frameIcon.textContent = config.icon;
+                    if (frameTitle) frameTitle.textContent = config.title;
+                    if (extLink) extLink.href = config.url;
+                    if (iframe && iframe.src.indexOf(config.url) === -1) {
+                        iframe.src = config.url;
+                    }
+                    window.location.hash = viewKey;
+                }
+            }
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // Handle URL Hash on Load (e.g. #dashboard or #admin)
+        document.addEventListener("DOMContentLoaded", () => {
+            const hash = window.location.hash.replace("#", "").toLowerCase();
+            if (VIEWS[hash]) {
+                showPortalView(hash);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

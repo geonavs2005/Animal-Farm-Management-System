@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Farm Account | Animal Farm Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container" style="width: 500px;">
+
+        <div class="icon-badge">
+            🌱
+        </div>
+
+        <h1>Create Farm Account</h1>
+
+        <p class="welcome">
+            Join the Animal Farm Management System to track livestock, feed rations, and veterinary health records.
+        </p>
+
+        <!-- Notification Banner -->
+        <div class="alert-banner" id="alertBanner"></div>
+
+        <form id="registerForm" onsubmit="return validateRegistration(event)">
+
+            <!-- Full Name & Farm Type in a 2-column row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fullName">Full Name / Farmer</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👨‍🌾</span>
+                        <input
+                            type="text"
+                            id="fullName"
+                            placeholder="e.g. John Miller"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="farmType">Farm Focus</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🚜</span>
+                        <select id="farmType" required>
+                            <option value="General Livestock">General Livestock</option>
+                            <option value="Dairy & Cattle">Dairy & Cattle</option>
+                            <option value="Poultry & Eggs">Poultry & Eggs</option>
+                            <option value="Sheep & Goats">Sheep & Goats</option>
+                            <option value="Equine / Stables">Equine / Stables</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Username & Email in a 2-column row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="username">Choose Username</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input
+                            type="text"
+                            id="username"
+                            placeholder="e.g. farmer_john"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Contact Email</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">✉️</span>
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="john@farm.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Create Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="At least 4 characters"
+                        autocomplete="new-password"
+                        oninput="handlePasswordInput()"
+                        required
+                    >
+                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility('password', this)" title="Show/Hide Password">
+                        👁️
+                    </button>
+                </div>
+                <!-- Interactive Password Strength Meter -->
+                <div class="strength-meter">
+                    <div class="strength-bar-container">
+                        <div class="strength-bar" id="strBar1"></div>
+                        <div class="strength-bar" id="strBar2"></div>
+                        <div class="strength-bar" id="strBar3"></div>
+                    </div>
+                    <div class="strength-text">
+                        <span>Password Strength:</span>
+                        <span id="strLabel">Enter password</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Re-enter password"
+                        autocomplete="new-password"
+                        oninput="handleConfirmPasswordInput()"
+                        required
+                    >
+                    <button type="button" class="password-toggle" onclick="togglePasswordVisibility('confirmPassword', this)" title="Show/Hide Password">
+                        👁️
+                    </button>
+                </div>
+                <div class="match-hint" id="matchHint"></div>
+            </div>
+
+            <!-- Agreement Checkbox -->
+            <div class="form-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="agreeTerms" required checked>
+                    <span>I agree to the farm safety & management guidelines</span>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn" id="regSubmitBtn" style="margin-top: 4px;">
+                <span>🌱 Create Farm Account</span>
+            </button>
+
+        </form>
+
+        <!-- Auto-fill Quick Test Demo Helper -->
+        <div class="quick-fill">
+            <span>⚡ Testing registration?</span>
+            <button type="button" class="quick-fill-btn" onclick="fillSampleRegister()">Fill Sample Data</button>
+        </div>
+
+        <!-- Footer Navigation Links -->
+        <div class="card-footer">
+            <p>
+                Already registered? 
+                <a href="login.html">🔐 Sign In here</a>
+            </p>
+            <a href="index.html" class="back-link">
+                ← Back to Homepage
+            </a>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

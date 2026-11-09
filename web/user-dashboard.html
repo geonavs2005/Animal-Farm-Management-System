@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Management Dashboard | Animal Farm Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container dashboard-container">
+
+        <!-- Top Navigation Bar -->
+        <header class="dash-topbar">
+            <div class="dash-brand">
+                <div class="dash-brand-icon">🌾</div>
+                <div>
+                    <h1 class="dash-brand-title">Animal Farm Management System</h1>
+                    <span class="dash-brand-sub" id="dashboardSubtitle">Central Livestock & Operations Console</span>
+                </div>
+            </div>
+
+            <div class="dash-user-panel">
+                <span class="role-chip user" id="roleBadge">🌾 Farmer</span>
+                <span style="font-weight: 600; color: var(--text-main);" id="userGreeting">Farmer</span>
+                <a href="logout" class="btn-signout" onclick="sessionStorage.clear()">
+                    <span>🚪 Sign Out</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Notification Banner -->
+        <div class="alert-banner" id="alertBanner" style="margin-bottom: 20px;"></div>
+
+        <!-- KPI Summary Cards -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #e8f5e9;">🐄</div>
+                <div class="stat-content">
+                    <span class="stat-number" id="statTotalAnimals">0</span>
+                    <span class="stat-label">Total Livestock</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #fef3c7;">🌾</div>
+                <div class="stat-content">
+                    <span class="stat-number" id="statTotalFeed">0 kg</span>
+                    <span class="stat-label">Feed In Stock</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #fee2e2;">🩺</div>
+                <div class="stat-content">
+                    <span class="stat-number" id="statHealthLogs">0</span>
+                    <span class="stat-label">Medical Records</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #e0f2fe;">👥</div>
+                <div class="stat-content">
+                    <span class="stat-number" id="statTotalUsers">0</span>
+                    <span class="stat-label">Registered Accounts</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <nav class="dash-tabs-bar">
+            <div class="dash-nav-group">
+                <button type="button" class="dash-tab-btn active" id="tabBtnAnimals" onclick="switchDashTab('animals')">
+                    🐄 Livestock & Animals
+                </button>
+                <button type="button" class="dash-tab-btn" id="tabBtnFeed" onclick="switchDashTab('feed')">
+                    🌾 Feed & Inventory
+                </button>
+                <button type="button" class="dash-tab-btn" id="tabBtnHealth" onclick="switchDashTab('health')">
+                    🩺 Health & Medical
+                </button>
+                <button type="button" class="dash-tab-btn" id="tabBtnUsers" onclick="switchDashTab('users')">
+                    👥 Farm Users
+                </button>
+            </div>
+
+            <div>
+                <button type="button" class="btn-secondary" style="font-size: 13px;" onclick="resetToSampleData()">
+                    🔄 Reload Demo Data
+                </button>
+            </div>
+        </nav>
+
+        <!-- ================= TAB 1: ANIMALS ================= -->
+        <section id="panelAnimals" class="tab-panel active">
+            <div class="section-toolbar">
+                <div class="toolbar-left">
+                    <div class="toolbar-search">
+                        <span class="toolbar-search-icon">🔍</span>
+                        <input type="text" id="animalSearchInput" placeholder="Search tag, name, breed..." onkeyup="filterAnimalsTable()">
+                    </div>
+                    <select id="animalSpeciesFilter" class="toolbar-select" onchange="filterAnimalsTable()">
+                        <option value="">All Species</option>
+                        <option value="Cattle">Cattle / Cow</option>
+                        <option value="Sheep">Sheep</option>
+                        <option value="Goat">Goat</option>
+                        <option value="Horse">Horse</option>
+                        <option value="Pig">Pig</option>
+                        <option value="Poultry">Poultry</option>
+                    </select>
+                </div>
+                <button type="button" class="btn-primary-action" onclick="openModal('addAnimalModal')">
+                    <span>➕ Add New Animal</span>
+                </button>
+            </div>
+
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Tag ID</th>
+                                <th>Name</th>
+                                <th>Species</th>
+                                <th>Breed</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Health Status</th>
+                                <th style="text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="animalsTableBody">
+                            <!-- Populated via script.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: FEED ================= -->
+        <section id="panelFeed" class="tab-panel">
+            <div class="section-toolbar">
+                <div class="toolbar-left">
+                    <div class="toolbar-search">
+                        <span class="toolbar-search-icon">🔍</span>
+                        <input type="text" id="feedSearchInput" placeholder="Search feed type..." onkeyup="filterFeedTable()">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary-action" onclick="openModal('addFeedModal')">
+                    <span>➕ Add Feed Type</span>
+                </button>
+            </div>
+
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Feed Code</th>
+                                <th>Feed Name</th>
+                                <th>Current Stock (kg)</th>
+                                <th>Daily Consumption</th>
+                                <th>Status</th>
+                                <th>Last Updated</th>
+                                <th style="text-align: right;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="feedTableBody">
+                            <!-- Populated via script.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: HEALTH RECORDS ================= -->
+        <section id="panelHealth" class="tab-panel">
+            <div class="section-toolbar">
+                <div class="toolbar-left">
+                    <div class="toolbar-search">
+                        <span class="toolbar-search-icon">🔍</span>
+                        <input type="text" id="healthSearchInput" placeholder="Search record or animal..." onkeyup="filterHealthTable()">
+                    </div>
+                </div>
+                <button type="button" class="btn-primary-action" onclick="openModal('addHealthModal')">
+                    <span>➕ Add Medical Log</span>
+                </button>
+            </div>
+
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Record ID</th>
+                                <th>Animal</th>
+                                <th>Treatment / Vaccine</th>
+                                <th>Veterinarian</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Notes</th>
+                                <th style="text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="healthTableBody">
+                            <!-- Populated via script.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: USERS ================= -->
+        <section id="panelUsers" class="tab-panel">
+            <div class="section-toolbar">
+                <h3 style="font-size: 18px; color: var(--primary-dark);">System Registered Users</h3>
+                <span style="font-size: 13px; color: var(--text-muted);">Accounts permitted to access the farm management system</span>
+            </div>
+
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Farm Type</th>
+                                <th>Role</th>
+                                <th style="text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Populated via script.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ================= MODAL: ADD ANIMAL ================= -->
+    <div class="modal-overlay" id="addAnimalModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>🐄 Register New Animal</h3>
+                <button type="button" class="modal-close-btn" onclick="closeModal('addAnimalModal')">&times;</button>
+            </div>
+            <form onsubmit="return handleAddAnimal(event)">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newAnimalTag">Tag / Ear ID *</label>
+                            <input type="text" id="newAnimalTag" placeholder="e.g. AN-105" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newAnimalName">Animal Name *</label>
+                            <input type="text" id="newAnimalName" placeholder="e.g. Daisy" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newAnimalSpecies">Species *</label>
+                            <select id="newAnimalSpecies" required>
+                                <option value="Cattle">Cattle / Cow</option>
+                                <option value="Sheep">Sheep</option>
+                                <option value="Goat">Goat</option>
+                                <option value="Horse">Horse</option>
+                                <option value="Pig">Pig</option>
+                                <option value="Poultry">Poultry</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="newAnimalBreed">Breed</label>
+                            <input type="text" id="newAnimalBreed" placeholder="e.g. Holstein">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newAnimalAge">Age</label>
+                            <input type="text" id="newAnimalAge" placeholder="e.g. 2.5 yrs">
+                        </div>
+                        <div class="form-group">
+                            <label for="newAnimalGender">Gender *</label>
+                            <select id="newAnimalGender" required>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newAnimalHealth">Health Status *</label>
+                        <select id="newAnimalHealth" required>
+                            <option value="Healthy">Healthy</option>
+                            <option value="Under Treatment">Under Treatment</option>
+                            <option value="Quarantine">Quarantine</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('addAnimalModal')">Cancel</button>
+                    <button type="submit" class="btn-primary-action"><span>💾 Save Animal</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: ADD FEED ================= -->
+    <div class="modal-overlay" id="addFeedModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>🌾 Add Feed Inventory Item</h3>
+                <button type="button" class="modal-close-btn" onclick="closeModal('addFeedModal')">&times;</button>
+            </div>
+            <form onsubmit="return handleAddFeed(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newFeedName">Feed Name / Description *</label>
+                        <input type="text" id="newFeedName" placeholder="e.g. Alfalfa Green Hay" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newFeedStock">Initial Stock (kg) *</label>
+                            <input type="number" id="newFeedStock" placeholder="e.g. 500" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newFeedConsumption">Daily Usage (kg/day) *</label>
+                            <input type="number" id="newFeedConsumption" placeholder="e.g. 20" min="1" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('addFeedModal')">Cancel</button>
+                    <button type="submit" class="btn-primary-action"><span>💾 Save Feed</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: RESTOCK FEED ================= -->
+    <div class="modal-overlay" id="restockFeedModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>📦 Restock Feed Supply</h3>
+                <button type="button" class="modal-close-btn" onclick="closeModal('restockFeedModal')">&times;</button>
+            </div>
+            <form onsubmit="return handleRestockFeed(event)">
+                <input type="hidden" id="restockFeedId">
+                <div class="modal-body">
+                    <p style="margin-bottom: 14px; font-weight: 600; color: var(--primary-dark);" id="restockFeedLabel"></p>
+                    <div class="form-group">
+                        <label for="restockAmount">Quantity to Add (kg) *</label>
+                        <input type="number" id="restockAmount" placeholder="e.g. 100" min="1" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('restockFeedModal')">Cancel</button>
+                    <button type="submit" class="btn-primary-action"><span>📦 Add to Stock</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: ADD HEALTH RECORD ================= -->
+    <div class="modal-overlay" id="addHealthModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>🩺 Add Medical & Health Log</h3>
+                <button type="button" class="modal-close-btn" onclick="closeModal('addHealthModal')">&times;</button>
+            </div>
+            <form onsubmit="return handleAddHealth(event)">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newHealthAnimal">Animal (Tag / Name) *</label>
+                            <input type="text" id="newHealthAnimal" placeholder="e.g. AN-101 (Daisy)" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newHealthType">Treatment / Procedure *</label>
+                            <input type="text" id="newHealthType" placeholder="e.g. Annual Rabies Booster" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newHealthVet">Veterinarian *</label>
+                            <input type="text" id="newHealthVet" placeholder="e.g. Dr. Miller" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newHealthDate">Date *</label>
+                            <input type="date" id="newHealthDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newHealthStatus">Status *</label>
+                        <select id="newHealthStatus" required>
+                            <option value="Completed">Completed</option>
+                            <option value="Pending">Pending / In Progress</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newHealthNotes">Clinical Notes</label>
+                        <input type="text" id="newHealthNotes" placeholder="e.g. Administered 5ml subcutaneous">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('addHealthModal')">Cancel</button>
+                    <button type="submit" class="btn-primary-action"><span>💾 Save Medical Record</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
